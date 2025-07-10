@@ -1,5 +1,6 @@
 package main.br.edu.ifsp.spo.java.todolist.core;
 
+import java.awt.*;
 import java.time.LocalDateTime;
 
 public class Task {
@@ -39,6 +40,11 @@ public class Task {
     public LocalDateTime getChangeDate() {
         return changeDate;
     }
+
+    public void setChangeDate(LocalDateTime changeDate) {
+        this.changeDate = changeDate;
+    }
+
 }
 
 //Uma tarefa deve conter os seguintes campos:
