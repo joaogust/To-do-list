@@ -10,6 +10,7 @@ import java.util.List;
 
 public class TodoRepository {
 
+
     public TodoRepository() {
         createTableIfNotExists();
     }
@@ -17,7 +18,7 @@ public class TodoRepository {
     public static void createTableIfNotExists() {  // Cria a tabela task
         String sql = """
             CREATE TABLE IF NOT EXISTS todo (
-                   id_task INTEGER PRIMARY KEY AUTOINCREMENT,
+                   id INTEGER PRIMARY KEY AUTOINCREMENT,
                    text TEXT NOT NULL,
                    completed BOOLEAN NOT NULL,
                    change_date TEXT NOT NULL
@@ -81,6 +82,28 @@ public class TodoRepository {
         }
     }
 
+    public void updateStatus(int id, boolean status) {
+        String sql = "UPDATE todo SET completed = ? WHERE id = ?";
+
+        try (Connection connection = ConnectionDB.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+
+            statement.setBoolean(1, status);
+            statement.setInt(2, id);
+
+            int update = statement.executeUpdate(); // Executa a atualização
+
+            if (update > 0 ) {
+                System.out.println("Tarefa atualizada!");
+            } else {
+                System.out.println("Nenhuma tarefa foi atualizada");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro: " + e.getMessage());
+        }
+    }
+
     public void delete(Todo todo) {
         String sql = "DELETE FROM todo WHERE id = ?";
 
@@ -97,7 +120,7 @@ public class TodoRepository {
 
     public List<Todo> findAll() {
         List<Todo> todos = new ArrayList<>();
-        String selectTasks = "SELECT * FROM task"; // Instrução SELECT para verificar todas as tasks no bdd
+        String selectTasks = "SELECT * FROM todo"; // Instrução SELECT para verificar todas as tasks no bdd
 
         try (Connection connection = ConnectionDB.getConnection();
              PreparedStatement statement = connection.prepareStatement(selectTasks);
@@ -128,7 +151,7 @@ public class TodoRepository {
 
     public List<Todo> findByStatus(boolean completed) {
         List<Todo> todos = new ArrayList<>();
-        String sql = "SELECT * FROM task WHERE completed = ?"; // Instrução SELECT para verificar todas as tasks no bdd
+        String sql = "SELECT * FROM todo WHERE completed = ?"; // Instrução SELECT para verificar todas as tasks no bdd
 
         try (Connection connection = ConnectionDB.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {

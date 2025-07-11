@@ -50,4 +50,5 @@ public class Todo {
     public void setChangeDate(LocalDateTime changeDate) {
         this.changeDate = changeDate;
     }
+
 }
