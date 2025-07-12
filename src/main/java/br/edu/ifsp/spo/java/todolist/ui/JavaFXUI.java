@@ -27,16 +27,19 @@ public class JavaFXUI extends Application implements SystemUI{
 
         // Criação da tabela
         table = new TableView<>();
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
 
         TableColumn<Todo, String> textColumn = new TableColumn<>("Tarefa");
         textColumn.setCellValueFactory(todo -> new SimpleStringProperty(todo.getValue().getText()));
+        textColumn.setPrefWidth(350);
 
         TableColumn<Todo, String> statsColumn = new TableColumn<>("Status");
         statsColumn.setCellValueFactory(todo -> new SimpleStringProperty(todo.getValue().isCompleted() ? "[  X  ]" : "[      ]"));
+        statsColumn.setPrefWidth(45);
 
         TableColumn<Todo, String> dateColumn = new TableColumn<>("Data de alteração");
         dateColumn.setCellValueFactory(todo -> new SimpleStringProperty(todo.getValue().getChangeDate().toString()));
+        dateColumn.setPrefWidth(200);
 
         table.getColumns().addAll(statsColumn, textColumn, dateColumn);
 
@@ -86,9 +89,13 @@ public class JavaFXUI extends Application implements SystemUI{
         VBox todoTable = new VBox(10, titleTodos, table);
         todoTable.setPrefWidth(500);
 
+        VBox space = new VBox();
+        space.setPrefWidth(100);
+
         BorderPane root = new BorderPane();
         root.setLeft(menu);
         root.setCenter(todoTable);
+        root.setRight(space);
 
         // janela
         primaryStage.setScene(new Scene(root, 900, 600));

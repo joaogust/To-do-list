@@ -51,7 +51,7 @@ public class TodoRepository {
                 todo.setId(generatedKeys.getInt(1));
             }
 
-            System.out.println("Tarefa inserida");
+            System.out.println("Tarefa inserida!");
 
         } catch (SQLException e) {
             System.out.println("Erro: " + e.getMessage());
@@ -82,28 +82,6 @@ public class TodoRepository {
         }
     }
 
-    public void updateStatus(int id, boolean status) {
-        String sql = "UPDATE todo SET completed = ? WHERE id = ?";
-
-        try (Connection connection = ConnectionDB.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-
-            statement.setBoolean(1, status);
-            statement.setInt(2, id);
-
-            int update = statement.executeUpdate(); // Executa a atualização
-
-            if (update > 0 ) {
-                System.out.println("Tarefa atualizada!");
-            } else {
-                System.out.println("Nenhuma tarefa foi atualizada");
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Erro: " + e.getMessage());
-        }
-    }
-
     public void delete(Todo todo) {
         String sql = "DELETE FROM todo WHERE id = ?";
 
@@ -112,6 +90,7 @@ public class TodoRepository {
 
             statement.setInt(1, todo.getId());
             statement.executeUpdate();
+            System.out.println("Tarefa excluída!");
 
         } catch (SQLException e) {
             System.out.println("Erro: " + e.getMessage());

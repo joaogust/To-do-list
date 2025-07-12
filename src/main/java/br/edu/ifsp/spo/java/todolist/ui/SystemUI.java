@@ -1,6 +1,5 @@
 package br.edu.ifsp.spo.java.todolist.ui;
 
-import br.edu.ifsp.spo.java.todolist.core.TodoSystem;
 import br.edu.ifsp.spo.java.todolist.model.Todo;
 
 import java.util.List;

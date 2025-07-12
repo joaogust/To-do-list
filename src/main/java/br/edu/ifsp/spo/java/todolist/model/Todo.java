@@ -1,6 +1,7 @@
 package br.edu.ifsp.spo.java.todolist.model;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Todo {
     private int id;
@@ -51,4 +52,16 @@ public class Todo {
         this.changeDate = changeDate;
     }
 
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Todo todo = (Todo) object;
+        return id == todo.id && Objects.equals(text, todo.text) && Objects.equals(completed, todo.completed) && Objects.equals(changeDate, todo.changeDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, text, completed, changeDate);
+    }
 }
